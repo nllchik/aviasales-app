@@ -1,0 +1,54 @@
+.ticket {
+	display: flex;
+	flex-direction: column;
+	max-width: 500px;
+	min-width: 280px;
+	border: 1px solid #DFE5EC;
+	border-radius: 4px;
+	background-color: white;
+	padding: 20px;
+ 
+	&__header {
+	  display: flex;
+	  justify-content: space-between;
+	  margin-bottom: 26px;
+	}
+ 
+	&__price {
+	  color: #2196F3;
+	  font-size: 24px;
+	  font-weight: 600;
+	  line-height: 24px;
+	}
+ 
+	&__info {
+	  display: flex;
+	  justify-content: space-between;
+	}
+ 
+	&__wayInfo,
+	&__timeInfo,
+	&__transferInfo {
+	  margin-bottom: 10px;
+	}
+ 
+	&__airports,
+	&__inWay,
+	&__transfer {
+	  color: #A0B0B9;
+	  font-size: 12px;
+	  font-weight: 600;
+	  line-height: 18px;
+	  letter-spacing: 0.5px;
+	  text-transform: uppercase;
+	}
+ 
+	&__time,
+	&__totalTime,
+	&__transferAirports {
+	  color: #4A4A4A;
+	  font-size: 14px;
+	  font-weight: 600;
+	  line-height: 21px;
+	}
+ }

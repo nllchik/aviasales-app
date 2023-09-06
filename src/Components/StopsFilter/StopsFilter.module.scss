@@ -1,0 +1,64 @@
+$primary-color: #4A4A4A;
+$hover-color: #F1FCFF;
+
+.filter {
+	background: #FFF;
+	border-radius: 5px;
+	box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.10);
+  width: 100%;
+	max-width: 250px;
+	min-width: 136px;
+	padding-bottom: 10px;
+  margin-right: 20px;
+  float: left;
+
+	&__title {
+		color: $primary-color;
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 12px;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+		padding: 17px 20px 10px 20px;
+	}
+
+	&__checkboxes {
+   	display: flex;
+   	flex-direction: column;
+	}
+}
+
+.check {
+  padding: 10px 0 15px 50px;
+  cursor: pointer;
+
+  &:hover {
+	background: $hover-color;
+ }
+
+  &__input {
+    position: absolute;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  &__input:checked + .check__box {
+    background-image: url(./checkbox-active.svg);
+  }
+
+  &__box {
+    position: absolute;
+    margin-left: -2em;
+    width: 20px;
+    height: 20px;
+    background-image: url(./Checkbox.svg);
+  }
+
+  &__text {
+    color: $primary-color;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+}

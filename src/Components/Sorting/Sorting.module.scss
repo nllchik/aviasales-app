@@ -1,0 +1,41 @@
+.sorting {
+	display: flex;
+	max-width: 502px;
+	box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.10);
+	background-color: white;
+	margin-bottom: 20px;
+
+	&__button {
+		flex-grow: 1;
+		padding: 15px;
+		background-color: white;
+		border: 1px solid #DFE5EC;
+		margin-right: -1px;
+		
+		&:hover {
+			background-color: #2196F3;
+			& .sorting__text { 
+				color: white;
+			}
+		}
+
+		&:first-child {
+			border-radius: 4px 0 0 4px;
+		}
+	
+		&:last-child {
+			border-radius: 0 4px 4px 0;
+		}
+	}
+
+	&__text {
+		color: #4A4A4A;
+		text-align: center;
+		font-size: 12px;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 20px;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
+	}
+}
