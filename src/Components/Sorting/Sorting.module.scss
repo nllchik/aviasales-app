@@ -12,11 +12,19 @@
 		border: 1px solid #DFE5EC;
 		margin-right: -1px;
 		
+		&.active {
+			background-color: #2196F3;
+			& .sorting__text { 
+				color: white;
+			}
+		}
+
 		&:hover {
 			background-color: #2196F3;
 			& .sorting__text { 
 				color: white;
 			}
+		
 		}
 
 		&:first-child {

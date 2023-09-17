@@ -3,9 +3,34 @@ body {
  }
 
 .main {
-	max-width: 960px;
-	height: 100%;
-	margin: 0 auto;
-	padding: 0 103px;
-	background-color: #F3F7FA;
+	min-width: 480px;
+    max-width: 960px;
+    background: #F3F7FA;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    min-height: 100vh;
 }
+
+.container {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 20px;
+  }
+  
+  .content {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	max-width: 960px;
+	padding: 0 20px;
+  }
+  
+  .left-column {
+	flex-grow: 200px;
+  }
+  
+  .rightColumn {
+	width: 500px;
+  }
