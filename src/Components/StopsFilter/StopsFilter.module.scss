@@ -61,3 +61,35 @@ $hover-color: #F1FCFF;
     line-height: 20px;
   }
 }
+
+@media (max-width: 767px) {
+  .filter {
+    max-width: 100%;
+    padding: 5px;
+    margin-right: 0;
+
+    &__checkboxes {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+   }
+  }
+  .check {
+    display: flex;
+    flex-direction: column;
+    padding-left: 35px;
+
+    &__box {
+      position: absolute;
+      margin-left: -2em;
+    }
+
+    &__text {
+      font-size: 10px;
+    }
+  }
+
+  .filter__title {
+    padding: 10px;
+  }
+}

@@ -1,9 +1,16 @@
 header {
-	padding-top: 50px;
-	margin-bottom: 50px;
+	padding-top: 30px;
+	margin-bottom: 30px;
 }
 
 .logo {
 	display: flex;
 	justify-content: center;
+}
+
+@media (max-width: 767px) {
+	header {
+		padding-top: 15px;
+		margin-bottom: 15px;
+	}
 }

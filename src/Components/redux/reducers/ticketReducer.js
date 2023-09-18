@@ -1,9 +1,21 @@
+import AviaApi from '../../../Api/AviaApi'
+import { setTickets, toggleLoading } from '../actions/ticketActions'
+
 const initialState = {
   allTickets: [],
   filteredTickets: [],
+  isLoading: true,
 }
 
 export default function ticketReducer(state = initialState, actions = {}) {
+  const filters = {
+    // eslint-disable-next-line no-unused-vars
+    ALL: (ticket) => true,
+    'NO-TRANSFERS': (ticket) => ticket.segments[0].stops.length === 0 && ticket.segments[1].stops.length === 0,
+    'ONE-TRANSFER': (ticket) => ticket.segments[0].stops.length === 1 && ticket.segments[1].stops.length === 1,
+    'TWO-TRANSFERS': (ticket) => ticket.segments[0].stops.length === 2 && ticket.segments[1].stops.length === 2,
+    'THREE-TRANSFERS': (ticket) => ticket.segments[0].stops.length === 3 && ticket.segments[1].stops.length === 3,
+  }
   switch (actions.type) {
     case 'SET_TICKETS': {
       return { ...state, allTickets: [...state.allTickets, ...actions.tickets] }
@@ -47,122 +59,46 @@ export default function ticketReducer(state = initialState, actions = {}) {
         ),
       }
     }
-    case 'ADD-ALL-FILTER': {
+    case 'ADD-FILTER': {
       return {
         ...state,
-        filteredTickets: state.allTickets,
+        filteredTickets: [...state.filteredTickets, ...state.allTickets.filter(filters[actions.filterType])],
       }
     }
-    case 'ADD-NO-TRANSFERS-FILTER': {
+    case 'REMOVE-FILTER': {
       return {
         ...state,
-        filteredTickets: [
-          ...state.filteredTickets,
-          ...state.allTickets.filter(
-            (ticket) => ticket.segments[0].stops.length === 0 && ticket.segments[1].stops.length === 0
-          ),
-        ],
+        filteredTickets: [...state.filteredTickets.filter((ticket) => !filters[actions.filterType](ticket))],
       }
     }
-    case 'ADD-ONE-TRANSFER-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [
-          ...state.filteredTickets,
-          ...state.allTickets.filter(
-            (ticket) => ticket.segments[0].stops.length === 1 && ticket.segments[1].stops.length === 1
-          ),
-        ],
-      }
-    }
-    case 'ADD-TWO-TRANSFERS-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [
-          ...state.filteredTickets,
-          ...state.allTickets.filter(
-            (ticket) => ticket.segments[0].stops.length === 2 && ticket.segments[1].stops.length === 2
-          ),
-        ],
-      }
-    }
-    case 'ADD-THREE-TRANSFERS-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [
-          ...state.filteredTickets,
-          ...state.allTickets.filter(
-            (ticket) => ticket.segments[0].stops.length === 3 && ticket.segments[1].stops.length === 3
-          ),
-        ],
-      }
-    }
-    case 'REMOVE-ALL-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [],
-      }
-    }
-    case 'REMOVE-NO-TRANSFERS-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [
-          ...state.filteredTickets.filter(
-            (ticket) => !(ticket.segments[0].stops.length === 0 && ticket.segments[1].stops.length === 0)
-          ),
-        ],
-      }
-    }
-    case 'REMOVE-ONE-TRANSFER-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [
-          ...state.filteredTickets.filter(
-            (ticket) => !(ticket.segments[0].stops.length === 1 && ticket.segments[1].stops.length === 1)
-          ),
-        ],
-      }
-    }
-    case 'REMOVE-TWO-TRANSFERS-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [
-          ...state.filteredTickets.filter(
-            (ticket) => !(ticket.segments[0].stops.length === 2 && ticket.segments[1].stops.length === 2)
-          ),
-        ],
-      }
-    }
-    case 'REMOVE-THREE-TRANSFERS-FILTER': {
-      return {
-        ...state,
-        filteredTickets: [
-          ...state.filteredTickets.filter(
-            (ticket) => !(ticket.segments[0].stops.length === 3 && ticket.segments[1].stops.length === 3)
-          ),
-        ],
-      }
+    case 'TOGGLE-LOADING': {
+      return { ...state, isLoading: actions.loading }
     }
     default:
       return state
   }
 }
 
-// export const fetchTickets = () => async (dispatch) => {
-//   const apiTickets = new AviaApi()
-//   const subscribe = async (searchId) => {
-//     const response = await apiTickets.getTickets(searchId)
-//     if (response.status === 500) {
-//       await subscribe(searchId)
-//     } else if (response.status !== 200) {
-//       setTimeout(() => subscribe(searchId), 1000)
-//     } else {
-//       const tickets = await response.json()
-//       dispatch(setTickets(tickets))
-//       if (!tickets.stop) {
-//         subscribe(searchId)
-//       }
-//     }
-//   }
-//   subscribe(id)
-// }
+export const fetchTickets = (id) => async (dispatch) => {
+  const aviaApi = new AviaApi()
+  const subscribe = async (searchId) => {
+    const response = await aviaApi.getTickets(searchId)
+
+    if (response.status === 500) {
+      await subscribe(searchId)
+    } else if (response.status !== 200) {
+      setTimeout(() => subscribe(searchId), 1000)
+    } else {
+      const tickets = await response.json()
+      console.log('Received tickets:', tickets)
+      dispatch(setTickets(tickets.tickets))
+      if (!tickets.stop) {
+        subscribe(searchId)
+      }
+      if (tickets.stop) {
+        dispatch(toggleLoading(false))
+      }
+    }
+  }
+  subscribe(id)
+}

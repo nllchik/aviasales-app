@@ -1,0 +1,11 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    &__text {
+        font-size: 20px;
+        padding: 10px;
+        color: #2196F3;
+    }
+}

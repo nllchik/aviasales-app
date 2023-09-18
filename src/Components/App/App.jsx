@@ -1,33 +1,30 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { SpinnerDotted } from 'spinners-react'
 
-import { setTickets } from '../redux/actions/ticketActions'
+import { fetchSearchId } from '../redux/reducers/searchIdReducer'
+import { fetchTickets } from '../redux/reducers/ticketReducer'
 import Header from '../Header'
 import StopsFilter from '../StopsFilter'
 import Sorting from '../Sorting'
 import TicketList from '../TicketList'
-import AviaApi from '../../Api/AviaApi'
+import Loading from '../Loading'
 
 import classes from './App.module.scss'
 
 function App() {
-  const aviaApi = new AviaApi()
-
   const dispatch = useDispatch()
-  // eslint-disable-next-line no-unused-vars
-  const { tickets } = useSelector((state) => state)
+  const { id } = useSelector((state) => state.searchId)
+  const isLoading = useSelector((state) => state.tickets.isLoading)
 
   useEffect(() => {
-    const fetchData = async () => {
-      const searchId = await aviaApi.getSearchId()
-      const response = await aviaApi.getTickets(searchId)
-      const data = await response.json()
-      dispatch(setTickets(data.tickets))
-    }
-
-    fetchData()
+    dispatch(fetchSearchId())
   }, [])
+
+  useEffect(() => {
+    if (id !== undefined) dispatch(fetchTickets(id))
+  }, [id])
+
+  const loading = isLoading ? <Loading /> : null
 
   return (
     <main className={classes.main}>
@@ -38,7 +35,7 @@ function App() {
         </div>
         <div className={classes.rightColumn}>
           <Sorting />
-          <SpinnerDotted color="#2196F3" />
+          {loading}
           <TicketList />
         </div>
       </div>

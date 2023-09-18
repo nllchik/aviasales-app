@@ -3,7 +3,7 @@ body {
  }
 
 .main {
-	min-width: 480px;
+	  min-width: 480px;
     max-width: 960px;
     background: #F3F7FA;
     margin-left: auto;
@@ -27,10 +27,32 @@ body {
 	padding: 0 20px;
   }
   
-  .left-column {
+  .leftColumn {
 	flex-grow: 200px;
   }
   
   .rightColumn {
 	width: 500px;
+  }
+
+  @media (max-width: 767px) {
+    .main {
+      padding: 10px;
+    }
+  
+    .container {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .leftColumn {
+      order: 1;
+      flex-grow: 1;
+    }
+  
+    .rightColumn {
+      order: 2;
+      flex-grow: 1;
+      width: 100%;
+    }
   }

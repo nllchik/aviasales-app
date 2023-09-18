@@ -47,3 +47,20 @@
 		text-transform: uppercase;
 	}
 }
+
+@media (max-width: 767px) {
+	.sorting {
+	  max-width: 100%;
+	  flex-wrap: wrap;
+	}
+  
+	.sorting__button {
+	  flex-grow: 0;
+	  flex-basis: calc(100% / 3);
+	  padding: 10px;
+  
+	  &:last-child {
+		margin-right: 0;
+	  }
+	}
+  }
