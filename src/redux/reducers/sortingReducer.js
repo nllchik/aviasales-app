@@ -1,4 +1,8 @@
-const initialState = { all: true, fastest: false, optimal: false }
+const initialState = {
+  price: false,
+  fastest: false,
+  optimal: false,
+}
 
 const sortingReducer = (state = initialState, actions = {}) => {
   switch (actions.type) {

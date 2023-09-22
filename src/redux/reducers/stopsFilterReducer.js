@@ -1,9 +1,9 @@
 const initialState = [
-  { value: 'Все', checked: false, id: 'ALL' },
-  { value: 'Без пересадок', checked: false, id: 'NO-TRANSFERS' },
-  { value: '1 пересадка', checked: false, id: 'ONE-TRANSFER' },
-  { value: '2 пересадки', checked: false, id: 'TWO-TRANSFERS' },
-  { value: '3 пересадки', checked: false, id: 'THREE-TRANSFERS' },
+  { value: 'Все', checked: true, id: 'ALL' },
+  { value: 'Без пересадок', checked: true, id: 'NO-TRANSFERS' },
+  { value: '1 пересадка', checked: true, id: 'ONE-TRANSFER' },
+  { value: '2 пересадки', checked: true, id: 'TWO-TRANSFERS' },
+  { value: '3 пересадки', checked: true, id: 'THREE-TRANSFERS' },
 ]
 
 const stopsFilterReducer = (state = initialState, actions = {}) => {

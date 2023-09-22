@@ -1,4 +1,5 @@
-import AviaApi from '../../../Api/AviaApi'
+import AviaApi from '../../Api/AviaApi'
+import setSearchId from '../actions/searchIdActions'
 
 const searchIdReducer = (state = '', actions = {}) => {
   switch (actions.type) {
@@ -12,15 +13,9 @@ const searchIdReducer = (state = '', actions = {}) => {
 
 export default searchIdReducer
 
-const setSearchId = (payload) => ({
-  type: 'GET_ID',
-  payload,
-})
-
 export const fetchSearchId = () => async (dispatch) => {
   const apiTickets = new AviaApi()
-  apiTickets.getSearchId().then((id) => {
-    console.log('Received ID:', id)
+  apiTickets.getSearchId(dispatch).then((id) => {
     dispatch(setSearchId(id))
   })
 }

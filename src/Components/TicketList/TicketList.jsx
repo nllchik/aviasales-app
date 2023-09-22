@@ -1,30 +1,29 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import uniqid from 'uniqid'
 
 import TicketCard from '../TicketCard'
 import NotFound from '../NotFound'
+import getFilteredAndSortedTickets from '../../utils/getFilteredAndSortedTickets'
 
 import classes from './TicketList.module.scss'
 
 function TicketList() {
   const [visibleTicketsCount, setVisibleTicketsCount] = useState(5)
-  const { allTickets, filteredTickets, isLoading } = useSelector((state) => state.tickets)
-  const filters = useSelector((state) => state.stopsFilter)
+  const { isLoading, allTickets } = useSelector((state) => state.tickets)
+  const stopsFilter = useSelector((state) => state.stopsFilter)
+  const sorting = useSelector((state) => state.sorting)
 
-  const allFiltersSelected = filters.find((filter) => filter.id === 'ALL').checked
-  const otherFiltersSelected = filters.filter((filter) => filter.name !== 'ALL').some((filter) => filter.checked)
-
-  const displayedTickets =
-    otherFiltersSelected && !allFiltersSelected
-      ? filteredTickets.slice(0, visibleTicketsCount)
-      : allTickets.slice(0, visibleTicketsCount)
+  const displayedTickets = getFilteredAndSortedTickets(allTickets, stopsFilter, sorting).slice(0, visibleTicketsCount)
 
   const showMoreTickets = () => {
     setVisibleTicketsCount((prevVisibleTicketsCount) => prevVisibleTicketsCount + 5)
   }
 
-  const ticketItems = displayedTickets.map((ticket) => <TicketCard key={uniqid()} ticketData={ticket} />)
+  const ticketItems = displayedTickets.map((ticket) => {
+    const [departure, arrival] = ticket.segments
+    const id = `${departure.origin}-${arrival.destination}-${departure.date}`
+    return <TicketCard key={id} ticketData={ticket} />
+  })
 
   const loadMoreButton = isLoading ? null : (
     <button type="button" onClick={showMoreTickets} className={classes.button}>

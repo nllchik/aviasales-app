@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { fetchSearchId } from '../redux/reducers/searchIdReducer'
-import { fetchTickets } from '../redux/reducers/ticketReducer'
+import { fetchSearchId } from '../../redux/reducers/searchIdReducer'
+import { fetchTickets } from '../../redux/reducers/ticketReducer'
 import Header from '../Header'
 import StopsFilter from '../StopsFilter'
 import Sorting from '../Sorting'
 import TicketList from '../TicketList'
 import Loading from '../Loading'
+import ServerError from '../ErrorHandler'
 
 import classes from './App.module.scss'
 
@@ -29,6 +30,7 @@ function App() {
   return (
     <main className={classes.main}>
       <Header />
+      <ServerError />
       <div className={classes.container}>
         <div className={classes.leftColumn}>
           <StopsFilter />

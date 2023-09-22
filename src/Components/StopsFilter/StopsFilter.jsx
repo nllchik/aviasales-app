@@ -1,8 +1,8 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { toggleChecked } from '../redux/actions/stopsFilterActions'
-import { addFilter, removeFilter } from '../redux/actions/ticketActions'
+import toggleChecked from '../../redux/actions/stopsFilterActions'
+import { addFilter, removeFilter } from '../../redux/actions/ticketActions'
 
 import classes from './StopsFilter.module.scss'
 
