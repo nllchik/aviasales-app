@@ -1,1 +1,1 @@
-https://aviasales-app-three-topaz.vercel.app/
+https://aviasales-o4d4m1p8n-nllchik.vercel.app/
